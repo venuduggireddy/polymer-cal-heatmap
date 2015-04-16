@@ -1,7 +1,29 @@
 {
   "name": "polymer-cal-heatmap",
-  "private": true,
+  "version": "0.0.1",
+  "authors": [
+    "Venu Duggireddy <venu.dvmr@gmail.com>"
+  ],
+  "description": "Polymer cal-heatmap Element",
+  "main": "demo.html",
+  "keywords": [
+    "polymer",
+    "cal-heatmap",
+    "d3"
+  ],
+  "license": "MIT",
+  "homepage": "http://jsfprimefacesblog.blogspot.com/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "polymer": "polymer/polymer#^0.8.0-rc.2"
+    "polymer": "polymer/polymer#^0.8.0-rc.2",
+    "d3": "~3.5.5",
+    "cal-heatmap": "~3.5.2",
+    "jquery": "~2.1.3"
   }
 }
