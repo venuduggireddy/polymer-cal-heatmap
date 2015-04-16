@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bower_components/cal-heatmap/cal-heatmap.css">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/cal-heatmap/cal-heatmap.min.js"></script>
+    <link rel="import" href="polymer-cal-heatmap.html">
+  </head>
+   <script>
+    var ericData = {};
+    var marcData = {};
+    
+     window.addEventListener('WebComponentsReady', function(e) {
+        var weekStart = new Date();
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        var ranges = d3.range(+weekStart/1000, +weekStart/1000 + 3600*24*8, 3600*24);
+        var max = 5;
+        var min = 1;
+        // Creating 2 random data sets
+        ranges.map(function(element, index, array) {
+        	marcData[element] = Math.floor(Math.random() * (max - min) + min);
+        	ericData[element] = Math.floor(Math.random() * (max - min) + min);
+        });
+        
+        updateHeatmapData(ericData)
+        
+     });
+     function updateHeatmapData(d){
+        var el = document.querySelector('polymer-cal-heatmap');
+        console.log('polymer-ready ready %O and Data is %O', el, d);
+        el.config = {
+          data:d
+        };
+     }
+    </script>
+  <body>
+    <div>
+      <polymer-cal-heatmap config></polymer-cal-heatmap>
+    </div>
+    <button type="button" onClick="updateHeatmapData(marcData)">Display Mark's Data</button>
+    <button type="button" onClick="updateHeatmapData(ericData)">Display Erics's Data</button>
+  </body>
+</html>
