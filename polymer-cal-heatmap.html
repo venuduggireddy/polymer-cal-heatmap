@@ -1,0 +1,59 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="polymer-cal-heatmap">
+  <style>
+    :host {
+      
+    }
+  </style>
+  <template>
+    <div id="cal_heatmap" config="{{config}}"></div>
+  </template>
+</dom-module>
+
+<script>
+  // element registration
+  Polymer({
+    is: "polymer-cal-heatmap",
+    // default configuration for cal-heatmap
+    defaultConfig:{
+      domain: "week",
+    	subDomain: "x_day",
+    	data: '',
+    	cellSize: 20,
+    	range: 1,
+    	legend: [1, 2, 3, 4]
+    },
+    // add properties and methods on the element's prototype
+    properties: {
+      // declare properties for the element's public API
+      config: {
+        type: Object,
+        notify: true,
+        // invoke when config is changed
+        observer: "configChanged",
+        value: function(){
+          return {};
+        }
+      }
+    },
+    configChanged: function(newValue, oldValue){
+      var that = this;
+      //console.log("New value is %O and OldValue is %O are equal ? %s and cal is %O", newValue, oldValue, (newValue === oldValue), that.cal);
+      if(that.cal){
+        //console.log("New Data is %O", newValue);
+        that.cal.update(newValue.data);
+      }
+    },
+    ready: function(){
+       //set element id to defaultConfig
+       this.defaultConfig.itemSelector = this.$.cal_heatmap;
+       //jquery dependency can be removed
+       var c = $.extend(this.defaultConfig, this.config);
+       console.log("Default config is %O and Binding Config is %O", this.defaultConfig, this.config);
+       this.cal = new CalHeatMap();
+       this.cal.init(c);
+    }
+    
+  });
+</script>

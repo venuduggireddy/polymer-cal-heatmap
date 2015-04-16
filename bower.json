@@ -1,0 +1,7 @@
+{
+  "name": "polymer-cal-heatmap",
+  "private": true,
+  "dependencies": {
+    "polymer": "polymer/polymer#^0.8.0-rc.2"
+  }
+}
