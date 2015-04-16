@@ -1,0 +1,127 @@
+<script>
+  var configureMixin = {
+
+    properties: {
+      content: {
+        type: String,
+        notify: true,
+        observer: 'contentChanged',
+        value: 'default'
+      },
+      object: {
+        type: Object,
+        notify: true,
+        value: function() { return {foo: 'obj-default'}; },
+        observer: 'objectChanged'
+      },
+      stomp: {
+        value: 5
+      }
+    },
+    
+    changeHandlerCount: 0,
+    objectChangeHandlerCount: 0,
+        
+    contentChanged: function() {
+      this.changeHandlerReadyState = this._readied;
+      this.changeHandlerCount++;
+      this.stomp = 10;
+    },
+    objectChanged: function() {
+      this.objectChangeHandlerCount++;
+    }
+  };
+
+</script>
+
+<template>
+  <span id="content">{{content}}</span>
+</template>
+<script>
+  Polymer({
+
+    is: 'x-configure-value',
+
+    mixins: [configureMixin]
+
+  });
+</script>
+
+<template>
+  <span id="content">{{content}}</span>
+</template>
+<script>
+  Polymer({
+
+    is: 'x-configure-function',
+
+    mixins: [configureMixin],
+    
+    configure: function() {
+      return {
+        content: 'content',
+        object: {foo: 'obj-content'}
+      };
+    }
+
+  });
+</script>
+
+
+<template>
+  <span id="content">{{content}}</span>
+</template>
+<script>
+  Polymer({
+
+    is: 'x-configure-gchild',
+
+    mixins: [configureMixin],
+    
+    configure: function() {
+      return {
+        content: 'gchild'
+      };
+    }
+    
+  });
+</script>
+
+<template>
+  <x-configure-gchild id="gchild" content="{{content}}" object="{{object}}"></x-configure-gchild>
+</template>
+<script>
+  Polymer({
+
+    is: 'x-configure-child',
+
+    mixins: [configureMixin],
+    
+    configure: function() {
+      return {
+        content: 'child'
+      };
+    }
+    
+  });
+</script>
+
+<template>
+  <x-configure-child id="child" content="{{content}}" object="{{object.goo}}"></x-configure-child>
+</template>
+<script>
+  Polymer({
+
+    is: 'x-configure-host',
+
+    mixins: [configureMixin],
+    
+    configure: function() {
+      return {
+        content: 'host',
+        object: {goo: {foo: 'obj-host'}}
+      };
+    }
+    
+  });
+</script>
